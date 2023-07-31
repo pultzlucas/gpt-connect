@@ -1,6 +1,12 @@
 [
     {
-        "username": "leandro.augusto.alves@outlook.com.br",
-        "password": "Zv15936jp!"
+        "username": "pultzlucas@gmail.com",
+        "password": "bHVrNTE2MjAyMA==",
+        "auth_method": "google"
+    },
+    {
+        "username": "hazarkomanolev@gmail.com",
+        "password": "TDVAMXNwNWx0eg==",
+        "auth_method": "google"
     }
 ]
