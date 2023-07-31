@@ -8,5 +8,15 @@
         "username": "hazarkomanolev@gmail.com",
         "password": "TDVAMXNwNWx0eg==",
         "auth_method": "google"
+    },
+    {
+        "username": "lucas.pultz@alunos.fho.edu.br",
+        "password": "bDVjMXNwNWx0eg==",
+        "auth_method": "google"
+    },
+    {
+        "username": "lucas.pultz@nappsolutions.com",
+        "password": "bHVrNTE2MjAyMGw1YzFA",
+        "auth_method": "google"
     }
 ]
