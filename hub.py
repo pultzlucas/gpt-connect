@@ -11,9 +11,6 @@ import logging
 app = Flask(__name__)
 CORS(app)
 
-log = logging.getLogger('werkzeug')
-log.setLevel(logging.ERROR)
-
 csv = CsvController()
 
 MAX_ROWS_BY_CSV = 1000
