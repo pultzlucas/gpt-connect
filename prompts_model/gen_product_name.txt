@@ -1,0 +1,15 @@
+Leia os produtos a seguir:
+<products reference>
+
+Agora, crie apenas 1 nome de produto rico em informações juntando as informações dos produtos lidos. Use as regras a seguir para a criação:
+- No começo do nome, coloque o nome do produto;
+- Após o primeiro nome, coloque a marca do produto;
+- Após, adicione a palavra "Sabor" antes das palavras correspondentes ao sabor do produto, exemplos de sabores: Morango, Chocolate, Frango, Carne, Leite. Caso não tenha sabor não escreva nada;
+- No final do nome, é obrigatório colocar a medida do produto, exemplos: 65g, 10ml, 1.2kg, 2L, com 1 Unidade, com 2 Unidades. Se encontrar um intervalo de peso, não coloque como medida. Se não encontrar a medida do produto coloque com 1 Unidade;
+- Melhore as palavras que estiverem escritas de forma incorreta;
+- Adicione acentuação nas palavras se necessário;
+- Por favor, não retire as medidas do nome dos produtos lidos;
+- Por favor, não coloque ean ou código de barras no produto, e se tiver remova;
+- Por favor, não coloque nada após a medida do produto.
+
+Por favor escreva apenas o nome do produto final, não escreva nada além disso.

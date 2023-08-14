@@ -19,7 +19,7 @@ class CsvController():
         self.input_files.remove(first_file)
         return first_file
 
-    def get_csv(self):
+    def get_csv(self, uid):
         self.input_files = self.get_files_to_process()
         filename = self.extract_input_file()
         input_dir = 'data/input/'
@@ -30,7 +30,7 @@ class CsvController():
                 'data': None
             }
         
-        filerename = filename.replace('.csv', '_processing.csv')
+        filerename = filename.replace('.csv', f'_processing_{uid}.csv')
         os.rename(f'{input_dir}{filename}', f'{input_dir}{filerename}')
 
         with open(f'{input_dir}{filerename}', 'r', encoding='utf-8') as f:
@@ -41,7 +41,10 @@ class CsvController():
             'data': csv
         }
 
-    def receive_csv(self, csv, filename):
+    def receive_csv(self, csv, params):
+        filename = params['filename']
+        uid = params['uid']
+
         if filename is None:
             return {
                 'stored': False,
@@ -54,10 +57,10 @@ class CsvController():
                 'error': 'csv data cannot be empty'
             }
         
-        # Removing the file processed
-        filerename = filename.replace('.csv', '_processing.csv')
+        filerename = filename.replace('.csv', f'_processing_{uid}.csv')
         if os.path.exists(f'data/input/{filerename}'): 
             os.remove(f'data/input/{filerename}')
+            
         with open(f'data/output/result_{filename}', 'wb') as w:
             writed = w.write(csv)
             return {

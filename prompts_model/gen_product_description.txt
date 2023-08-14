@@ -1,0 +1,2 @@
+Escreva uma descrição simples de 200 caracteres para o produto "<product name>".
+Se não encontrar informações sobre o produto ou não conseguir escrever a descrição escreva "desculpe".

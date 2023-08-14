@@ -1,0 +1,1 @@
+Preencha as palavras que estão abreviadas no nome do produto "<product name>". Não desabrevie as medidas como ml, g, mg e L. Escreva somente o resultado final.

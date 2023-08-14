@@ -13,7 +13,7 @@ CORS(app)
 
 csv = CsvController()
 
-MAX_ROWS_BY_CSV = 1000
+MAX_ROWS_BY_CSV = 250
 
 class InputFolderListener(FileSystemEventHandler):
     def on_created(self, event):
@@ -42,11 +42,14 @@ def root():
 
 @app.get("/csv")
 def get_csv():
-    return csv.get_csv()
+    return csv.get_csv(request.args.get(key='uid', type=str))
 
 @app.post("/csv")
 def post_csv():
-    return csv.receive_csv(request.data, request.args.get(key='filename', type=str))
+    return csv.receive_csv(request.data, dict(
+        filename=request.args.get(key='filename', type=str),
+        uid=request.args.get(key='uid', type=str)
+    ))
 
 if __name__ == '__main__':
     app.run(debug=False, port=5123)

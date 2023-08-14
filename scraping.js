@@ -1,84 +1,48 @@
-let input = []
-let output = []
-let prodId = 0
+async function require(url) {
+    const req = await fetch(url)
+    return req.text()
+};
 
-function getProductDescription(prodName) {
-    const input = document.querySelector('textarea')
-    input.value = `Descrição simples com 200 palavras para ${prodName}`
-    input.dispatchEvent(new Event('input', { bubbles: true }));
-    setTimeout(() => {
-        document.querySelector('.absolute.p-1.rounded-md').click()
-    }, 100)
-}
+(async() => {
 
-function getDescriptionFromPage(cod) {
-    const allDescriptions = document.querySelectorAll('.markdown.prose.w-full>p')
-    if (allDescriptions.length > 0) {
-        const description = allDescriptions[allDescriptions.length - 1].textContent
-        output.push([cod, description])
+    /* IMPORT LIBS */
+
+    // eval(await require())
+    // eval(await require())
+
+
+
+    const promptString = input => {
+        return `Escreva uma descrição simples e sem abreviações de 300 caracteres para o produto "${input[1]}"`
     }
-}
-
-function sleep(milliseconds) {
-      var start = new Date().getTime();
-      for (var i = 0; i < 1e7; i++) {
-        if ((new Date().getTime() - start) > milliseconds){
-          break;
-        }
-      }
-}
-
-function isProcessing() {
-    return document.body.contains(document.querySelector('.text-2xl'))
-}
-
-function executeGPT() {
-    if (!isProcessing()) {
-        const product = input[prodId]
-        if (product) {
-            const allDescriptions = document.querySelectorAll('.markdown.prose.w-full>p')
-            if (allDescriptions.length > 0) {
-                const description = allDescriptions[allDescriptions.length - 1].textContent
-                output.push([input[prodId][0], description])
-                prodId++
-            }
-            if (input[prodId]) {
-                getProductDescription(input[prodId][1])
-            }
-        } else {
-            genCsvFile(output)
-            return
-        }
+    
+    const processPromptResult = (input, result) => {
+        const finalResult = String(result)
+            .replaceAll('-', '')
+            .replaceAll('(', '')
+            .replaceAll(')', '')
+            .replace(/\.$/, '')
+            .replace(/\s+/g, ' ')
+            .split(' ')
+            .map(word => {
+                word = String(word).toLowerCase()
+                return word && word[0].toUpperCase() + word.slice(1)
+            })
+            .join(' ')
+    
+        output.push([input[0], finalResult])
     }
-    sleep(10000)
+    
+    const gpt = ChatGpt(promptString, processPromptResult)
+    const csv = CsvManager('@')
+    
+    const scraper = GptScraper(gpt, csv, {
+        maxQueriesByExecution: 20,
+        pauseTime: 2 * 60 * 1000,
+        blockedCheckTime: 4 * 60 * 1000
+    })
+    
+    scraper.run()
 
-    setTimeout(() => {
-        executeGPT()
-    }, 200)
-}
+})
 
-function genCsvFile(data) {
-    const dataCsv = data.map(row => row.join(',')).join('\n')
-    const blob = new Blob([dataCsv], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.setAttribute('href', url)
-    a.setAttribute('download', 'result.csv');
-    a.click()
-}
-
-function createFilePicker() {
-    const input = document.createElement('input')
-    input.classList.add('input-file-script')
-    input.type = 'file'
-    document.body.insertBefore(input, document.body.firstChild)
-}
-
-createFilePicker()
-
-document.querySelector('.input-file-script').addEventListener('input', setInput, false)
-async function setInput() {
-    const inputText = await this.files[0].text()
-    input = inputText.split('\n').map(row => row.trim().split(','))
-    executeGPT()
-}
